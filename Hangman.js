@@ -58,19 +58,6 @@ for(var i = 0; i < psSize; i++){
     particleSystem2[i] = new fireParticle(200 + random(-10,10),200 + random(-10,10));
 }
 
-/*
-var fire = new fireParticle(50,400);
-fire.size = 20;
-fire.drawParticle();
-
-var fire2 = new fireParticle(50,465);
-fire2.size = 40;
-fire2.drawParticle();
-fire2.gMaxSize = 40;
-fire2.gMinSize = 20;
-fire2.g = 70;
-*/
-
 // non-animated objects
 
 // torch
@@ -83,6 +70,13 @@ var torch = function(posX, posY){
     rect(posX-10,posY-5,20,10);
 };
 
+// sun
+
+var sun = function(posX, posY, sunSize){
+    fill(227, 182, 68);
+    ellipse(posX, posY, sunSize, sunSize);
+};
+
 // ground
 
 var ground = function(height){
@@ -90,12 +84,35 @@ var ground = function(height){
     rect(0,height, 500, 200);
 };
 
+// hanging station (?)
+
+var hangingStation = function(){
+    fill(107, 92, 62);
+    //          1 -- Floor
+    // stands
+    rect(150, 400, 10, 50);
+    rect(350, 400, 10, 50);
+    // ground
+    rect(150, 400, 200, 10);
+    //stairs
+    rect(120, 440, 40, 10);
+    rect(130, 420, 20, 20);
+    rect(140, 400, 10, 20);
+    //          2 -- sideStands
+    rect(180, 300, 20, 100);
+    rect(300, 300, 20, 100);
+    //          3 -- top
+    rect(180, 300, 120, 10);
+};
+
 // draw all object
 
 var drawNonAnimatedObjects = function(){
+    sun(250,420,200);
     ground(420);
     torch(50, 405);
     torch(450, 405);
+    hangingStation();
 };
 
 // draw function
@@ -119,15 +136,6 @@ var draw = function() {
             particleSystem2.pop();
         }
     }
-    /*
-    fire.drawParticle();
-    fire.glow();
-    */
-    
-    /*
-    fire2.drawParticle();
-    fire2.glow();
-    */
     
     drawNonAnimatedObjects();
     
