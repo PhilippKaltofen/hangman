@@ -567,14 +567,18 @@ var pm_b2_color = 220;
 var pm_b2_posX = 255;
 var pm_b2_posY = 370;
 
+var currentPlayerToEnterName = 1;
+var p1_nameStarted = false;
+var p2_nameStarted = false;
+
 // 2 player name areas
 var name_area_p1_posX = 250;
 var name_area_p1_posY = 188;
-var name_area_p2_posX;
-var name_area_p2_posY;
+var name_area_p2_posX = 250;
+var name_area_p2_posY = 188;
 
-var playerName_p1 = "enter Name";
-var playerName_p2 = "Yoloswaggings";
+var playerName_p1 = "Player 1";
+var playerName_p2 = "Player 2";
 
 var drawSmiley = function(posX, posY, color){
     fill(100);
@@ -657,10 +661,26 @@ var drawStartScreen = function(){
     if(singlePlayer === false){
         fill(198, 226, 247);
         rectMode(CENTER);
-        rect(name_area_p1_posX, name_area_p1_posY, 210, 60);
-        fill(255);
-        textSize(50);
-        text(playerName_p1, name_area_p1_posX, name_area_p1_posY + 15);
+        if(currentPlayerToEnterName === 1){
+            rect(name_area_p1_posX, name_area_p1_posY, 210, 60);
+            fill(255);
+            textSize(50);
+            text(playerName_p1, name_area_p1_posX, name_area_p1_posY + 15);
+        }
+        if(currentPlayerToEnterName === 2){
+            rect(name_area_p2_posX, name_area_p2_posY, 210, 60);
+            fill(255);
+            textSize(50);
+            text(playerName_p2, name_area_p2_posX, name_area_p2_posY + 15);
+        }
+        if(currentPlayerToEnterName === 3) {
+            fill(255);
+            text(playerName_p1 + " VS " + playerName_p2, 250, 140);
+        } else {
+            textSize(20);
+            fill(255);
+            text("write name and press ENTER to confirm", 250, 140);
+        }
         rectMode(LEFT);
     }
 };
@@ -802,7 +822,29 @@ var keyPressed = function(){
     
     // start 
     if(gameState === 0){
-        
+        if(currentPlayerToEnterName === 1){
+            if(p1_nameStarted === false){
+                playerName_p1 = key.toString();
+                p1_nameStarted = true;
+            } else {
+                if(key.code === ENTER){
+                    currentPlayerToEnterName = 2;
+                } else {
+                    playerName_p1 += key.toString();
+                }
+            }
+        } else if(currentPlayerToEnterName === 2){
+            if(p2_nameStarted === false){
+                playerName_p2 = key.toString();
+                p2_nameStarted = true;
+            } else {
+                if(key.code === ENTER){
+                    currentPlayerToEnterName = 3;
+                } else {
+                    playerName_p2 += key.toString();
+                }
+            }
+        }
     }
     
     // in game
